@@ -1,31 +1,95 @@
-# ActiveMind
+# 🧠 ActiveBuddy – AI-assisted Model Validator for Rails
 
-TODO: Delete this and the text below, and describe your gem
+**ActiveBuddy** is a professional-grade Ruby gem that intelligently analyzes your ActiveRecord models and suggests validations and associations based on column names, data types, constraints, and naming conventions.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_mind`. To experiment with that code, run `bin/console` for an interactive prompt.
+Perfect for jump-starting new Rails projects with smart, conventional best-practice validations.
 
-## Installation
+---
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+## 🎯 Features
 
-Install the gem and add to the application's Gemfile by executing:
+- ✅ Smart inference of:
+  - `presence`
+  - `uniqueness`
+  - `length`
+  - `numericality`
+  - `format` validations
+- 🧩 Association recommendations:
+  - `belongs_to`, `has_many`, etc.
+- 🔍 Custom rule engine based on Rails conventions and common model types (User, Payment, Account, etc.)
+- 🔮 Expandable AI-based ruleset planned for future updates
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+---
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+## 🛠 Installation
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+Add this line to your application's Gemfile:
 
-## Usage
+```ruby
+gem 'active_buddy'
+```
 
-TODO: Write usage instructions here
+And then execute:
 
-## Development
+```bash
+bundle install
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Or install it yourself as a standalone gem:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```bash
+gem install active_buddy
+```
 
-## License
+---
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+## ⚡️ Usage
+
+In your Rails app or console:
+
+```ruby
+require 'active_Buddy'
+
+analyzer = ActiveBuddy::Analyzer.new(User)
+puts analyzer.suggest_validations
+puts analyzer.suggest_associations
+```
+
+Output:
+
+```ruby
+validates :email, presence: true
+validates :email, uniqueness: true
+validates :email, format: { with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/ }
+validates :name, presence: true
+belongs_to :account
+```
+
+---
+
+## ✅ Supported Patterns
+
+ActiveBuddy automatically picks up and suggests validations based on:
+
+| Field Pattern       | Suggested Validations |
+|---------------------|------------------------|
+| `email`             | format, presence, uniqueness |
+| `phone`, `mobile`   | phone format |
+| `name`, `title`     | presence, length |
+| `password`          | length (>= 6) |
+| `age`, `count`, `qty` | numericality (integer) |
+| `price`, `amount`   | numericality (>= 0) |
+| `bio`, `description`| length (max 1000) |
+| `status`, `role`, `type` | presence |
+
+Also detects and formats associations from ActiveRecord relationships.
+
+---
+
+## 🧪 Run Specs
+
+```bash
+bundle exec rspec
+```
+
+---

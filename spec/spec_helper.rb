@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_mind"
+require "active_buddy"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
